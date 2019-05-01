@@ -65,6 +65,34 @@
         // 即使我们做了这个小改变，改进一下冒泡排序算法，但是我们还是不推荐该算法
         // 它的时间复杂度是 O(n^2)
 
+        // 选择排序
+        // 选择排序算法是一种原址比较排序的算法，选择排序大致思路是找到数据结构中的最小值并将其放到第一位
+        // 接着找到第二小的值并将其放到第二位，以此类推
+
+        this.selectionSort = function() {
+            var length = array.length,  //(1)
+                indexMin;
+
+            for (var i = 0; i < length-1; i++) { //(2)
+                indexMin = i;                    //(3)
+                for (var j = i; j < length; j++) { //(4)
+                    if (array[indexMin] > array[j]) { //(5)
+                        indexMin = j               //(6)
+                    }
+                }
+
+                if (i !== indexMin) {              // (7)
+                    swap(i, indexMin)
+                }
+            }
+        }
+
+        /*
+        首先声明一些将在算法中使用到的变量。接着，外循环(2)迭代数组，并控制迭代轮次(数组的第n个值————下一个最小值)
+        我们假设本轮次的第一个值 为 数组最小值(3)。然后，从当前i 的值开始至数组结束(4),我们比较是否位置j的值比当前最小值
+        小(5);如果是， 则改变最小值至新最小值(6)。当内循环结束(4),将得出数组第n小的值。
+        最后，如果该最小值和原最小值不同(7), 则交换其值
+        */  
 
         // 现在我们地声明一个 swap() 函数
         var swap = function(index1, index2) {
@@ -86,16 +114,31 @@
         return array
     }
 
-    var array = createNonSortedArray(5)
-    console.log(array.toString())
-    console.log(Array.toString())
-    array.bubbleSort()
-    console.log(array.toString())
+    // 代码测试 冒泡排序
+    // var array = createNonSortedArray(5)
+    // console.log(array.toString())
+    // console.log(Array.toString())
+    // array.bubbleSort()
+    // console.log(array.toString())
 
     // [5,4,3,2,1]
     // output : function Array() { [native code] }
     //          [1,2,3,4,5]
 
+    
+    // 代码测试 选择排序
+    var array = createNonSortedArray(5)
+    console.log(array.toString())
+    console.log(Array.toString())
+    array.selectionSort()
+    console.log(array.toString())
+
+    /*
+    output :5,4,3,2,1
+            function Array() { [native code] }
+            1,2,3,4,5
+
+    */
     
     </script>
 </body>
