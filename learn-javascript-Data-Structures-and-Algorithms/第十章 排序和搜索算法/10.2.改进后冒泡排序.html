@@ -99,6 +99,7 @@
         // 还是插到第一项之前呢? 这样，头两项就已经正确排序，接着和第三项比较(它是应该插到第一、第二还是第三的位置)
 
         this.insertionSort = function() {
+            //debugger
             var length = array.length,   // (1)
             j, temp;
             for (var i = 1; i < length; i++) { //(2)
@@ -108,10 +109,16 @@
                     array[j] = array[j-1];     // (6)
                     j--;
                 }
+                // 举个例子： 过程大概就是：
+                // [2,3,4,5,1] => [2,3,4,5,5] => [2,3,4,4,5] =>[2,3,3,4,5] => [2,2,3,4,5] 
+                // 接下来我们就把 temp 中 值 放到数组的第一位 arr[0] = temp
+                // [1,2,3,4,5]
                 array[j] = temp;        // (7)
 
             }
         }
+
+        // 在排序小型的算法的时候，此算法比选择排序和冒泡排序性能要好
 
         // 步骤说明：
         /*
@@ -120,6 +127,59 @@
         下一步是要找到正确的位置来插入项目。只要变量j比0大(因为数组的第一索引是0—————没有负值的索引)并且数组中前面的值比较待比较的值大
         (5)我们就把这个值移到当前的位置上(6)并减少j.最终该项目能插入到正确的位置上
         */
+
+        // 归并排序
+        /*
+        归并排序是一种分治算法。其思想是将原数组切成较小的数组，直到每个小数组只有一个位置，接着将小数组归并成较大的数组，直到最后只有一个
+        排序完毕的大数组
+        由于是分治法， 归并排序也是递归的
+        */
+
+        this.mergeSort = function(){
+            array = mergeSortRec(array)
+        }
+
+        // 每当实现一个递归函数，我们都会实现一个实际被执行的辅助函数。对归并排序我们也会这么做。
+        // 我们声明 mergeSort() 以供随后使用，而 mergeSort 方法将会调用 mergeSortRec(该函数是一个递归函数)
+
+        var mergeSortRec = function(array) {
+            var length = array.length;
+            if (length === 1) {  // (1)
+                return array     // (2)
+            }
+
+            var mid = Math.floor(length / 2),  // (3)
+                left = array.slice(0 , mid),   // (4)
+                right = array.sclie(mid, length); // (5)
+
+            return merge(mergeSortRec(left), mergeSortRec(right)) //(6)    
+        }
+
+        // 下面的步骤是调用 merge 函数，它负责 合并和排序小数组来产生大数组，知道回到原始数组并已排序
+        
+        var merge = function(left, right) {
+            var result = [],  //(7)
+                il = 0,
+                ir = 0;
+
+            while(il < left.length && ir < right.length) { // 8
+                if(left[il] < right[ir]) {
+                    result.push(left[il++])   // 9
+                } else {
+                    result.push(right[ir++])  // 10
+                }
+            }
+
+            while (il < left.length) {  // 11
+                result.push(left[il++])
+            }
+
+            while (ir < right.length) { //12 
+                result.push(right[ir++])
+            }
+
+            return result; // (13)
+        }
 
 
         // 现在我们地声明一个 swap() 函数
@@ -155,11 +215,11 @@
 
     
     // 代码测试 选择排序
-    var array = createNonSortedArray(5)
-    console.log(array.toString())
-    console.log(Array.toString())
-    array.selectionSort()
-    console.log(array.toString())
+    // var array = createNonSortedArray(5)
+    // console.log(array.toString())
+    // console.log(Array.toString())
+    // array.selectionSort()
+    // console.log(array.toString())
 
     /*
     output :5,4,3,2,1
@@ -167,7 +227,13 @@
             1,2,3,4,5
 
     */
-
+    
+    // 代码测试 插入排序
+    var array = createNonSortedArray(5)
+    console.log(array.toString())
+    console.log(Array.toString())
+    array.insertionSort()
+    console.log(array.toString())
     </script>
 </body>
 </html>
