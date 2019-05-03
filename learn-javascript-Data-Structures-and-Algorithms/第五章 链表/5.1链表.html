@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    /*
+    链表存储有序的元素集合，但不同与数组，链表中的元素在内存中并不是连续放置的。每个元素由一个存储元素本身的结点
+    和一个指向下一个元素的引用(也称指针或链接)组成。
+    相对于传统的数组，链表的一个好处在于，添加或删除元素的时候不需要移动其他元素。
+    然而，链表需要使用指针。
+    数组的另一个细节是可以直接访问任何位置的任何元素，而想要访问链表中间的一个元素，需要从起点开始迭代
+    列表直到找到所需的元素
+    */ 
+
+    // 创建一个链表
+
+    function LinkedList() {
+
+        var Node = function(element) { //(1)
+            this.element = element
+            this.next = null
+        }
+
+        var length = 0; // (2)
+        var head = null; // (3)
+
+        
+        
+    }
+
+    // 测试代码
+    var list = new LinkedList()
+    list.append(16)
+    list.append(19)
+
+
+    </script>
+</body>
+</html>
