@@ -147,6 +147,36 @@ priorityQueue.print()
 priorityQueue.front()
 
 
+    // 循环队列————击鼓传花
+    /*
+    在这个游戏中，孩子中围成一圈，把花尽快的传递身边的人。某一时刻传话停止，这个时候花在谁的手里
+    ，谁就要退出圆圈结束游戏。重复这个过程，直到只剩一个孩子
+    */
+
+    function hotPotato (nameList, num) {
+    debugger
+        var queue = new Queue  //(1)
+
+        for (var i = 0; i < nameList.length; i++) {
+            queue.enqueue(nameList[i]) //(2)
+        }
+
+        var eliminated = ''
+        while (queue.size() > 1) {
+            for (var i = 0; i < num; i++) {
+                queue.enqueue(queue.dequeue())  //(3)
+            }
+            eliminated = queue.dequeue()  //(4)
+            console.log(eliminated + '在击鼓传花游戏中被淘汰。')
+        }
+
+        return queue.dequeue() // (5)
+    } 
+
+    var names = ['John','Jack','Camlia','Ingrid','Carl']
+    var winner = hotPotato(names, 7)
+    console.log('胜利者:' + winner)
+
 
 
 
