@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // 栈的创建
+    function Stack() {
+        // 各种属性和方法的声明
+        // 我们需要选择一种数据结构来保存栈里的元素，可以选择数组
+        var items = [];
+
+        // push(element(s)) 添加一个(或几个)新元素到栈顶
+        this.push = function(element) {
+            items.push(element)
+        }
+
+        // pop(): 移除栈顶的元素， 同时返回被移除的元素
+        this.pop = function() {
+            return items.pop()
+        }
+
+        // peek() 返回栈顶的元素，不对栈做任何的修改(这个方法不会移除栈顶的元素，仅仅返回它)
+        this.peek = function() {
+            // 因为类内部的使用数组保存元素的，所以访问数组的最后一个元素可以用 length-1
+            return items[items.length-1]
+        }
+
+        // isEmpty() 如果栈里没有任何元素就返回 true, 否则就返回 false
+        this.isEmpty = function() {
+            return items.length == 0
+        } 
+
+        // size() 返回栈里的元素个数。这个方法和数组的 length 属性很类似
+        this.size = function() {
+            return items.length
+        }
+
+        // clear() 移除栈里的所有的元素
+        this.clear = function() {
+            items = []
+        }
+        // 另外可以多次调用pop 方法，把数组中的元素全部移除，这样也能实现 clear 方法
+
+        // 为了检查栈里的内容，我们来实现一个辅助方法，叫 print.它会把栈里的元素都输出到控制台
+        this.print = function() {
+            console.log(items.toString())
+        }
+
+    }
+
+    // 使用 Stack 类
+    var stack = new Stack()
+    //console.log(stack.isEmpty())   //
+    stack.push(5)
+    stack.push(8)
+    console.log(stack.peek())     //
+    
+    stack.push(11)
+    stack.print()
+    console.log(stack.size())  
+    console.log(stack.isEmpty())
+    stack.push(15)
+
+    stack.pop()
+    stack.pop()
+    console.log(stack.size())
+    stack.print()
+
+
+    // 从十进制到二进制
+    /*
+    input : 数值
+    output: 输出为对应的进制
+    */
+    function divideBy2(decNumber) {
+
+        var remStack = new Stack(),
+            rem,
+            binaryString = '';
+
+        while (decNumber > 0) {
+            rem = Math.floor(decNumber % 2)
+            remStack.push(rem)
+
+            decNumber = Math.floor(decNumber / 2)
+        }
+
+        while (!remStack.isEmpty()) {
+            binaryString += remStack.pop().toString()
+        }
+        
+        return binaryString
+
+    }
+
+    // 测试代码
+    //console.log(divideBy2(233))  // 11101001
+    //console.log(divideBy2(10))   // 1010
+    //console.log(divideBy2(1000)) // 1111101000
+
+    /*
+    我们很容易修改之前的算法，是之能把十进制转换为任何进制。除了让十进制数字和2整除
+    转成二进制数，还可以传入其他任意进制的基数为参数
+    */
+
+    function baseConverter(decNumber, base) {
+    // debugger
+        var remStack = new Stack(),
+            rem,
+            baseString = '',
+            digits = '0123456789ABCDEF';
+
+        while (decNumber > 0) {
+            rem = Math.floor(decNumber % base)
+            remStack.push(rem)
+
+            decNumber = Math.floor(decNumber / base)
+
+        }
+
+        while (!remStack.isEmpty()) {
+            baseString += digits[remStack.pop()]
+        }    
+
+        return baseString
+    }
+
+    console.log(baseConverter(100, 2))  // 1100100
+    console.log(baseConverter(100345, 8))  //303771
+    console.log(baseConverter(100345, 16)) // 187F9
+    </script>
+</body>
+</html>
